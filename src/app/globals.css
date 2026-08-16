@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-orange px-7 py-3.5 font-sans text-base font-bold text-white transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-ink/15 bg-transparent px-7 py-3.5 font-sans text-base font-bold text-ink transition hover:bg-ink/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink;
+  }
+
+  .field-label {
+    @apply mb-1.5 block font-sans text-sm font-semibold text-ink;
+  }
+
+  .field-input {
+    @apply w-full rounded-lg border border-ink/15 bg-white px-4 py-3 font-sans text-base text-ink placeholder:text-ink/35 focus:border-violet focus:outline-none focus:ring-2 focus:ring-violet/30;
+  }
+
+  .field-error {
+    @apply mt-1.5 text-sm font-medium text-orange;
+  }
+}
