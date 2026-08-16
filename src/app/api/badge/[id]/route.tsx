@@ -19,7 +19,13 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  const supabase = createAdminClient();
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch {
+    return new Response("Badge indisponible", { status: 404 });
+  }
+
   const { data: signature } = await supabase
     .from("signatures")
     .select("name, organisation, confirmed_at, revoked_at")

@@ -11,7 +11,12 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 async function confirmSignature(token: string) {
-  const supabase = createAdminClient();
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch {
+    return { status: "unavailable" as const };
+  }
 
   const { data: tokenRow } = await supabase
     .from("confirmation_tokens")
@@ -81,7 +86,7 @@ export default async function ConfirmTokenPage({
                 Signature confirmée
               </h1>
               <p className="mt-4 text-ink/65">
-                Merci {result.name}, votre engagement pour un esport mixte et
+                Merci {result.name}, votre engagement pour un esport
                 responsable est désormais officiel.
               </p>
 
@@ -131,6 +136,18 @@ export default async function ConfirmTokenPage({
               <Link href="/signer" className="btn-primary mt-8">
                 Signer la Charte
               </Link>
+            </>
+          )}
+
+          {result.status === "unavailable" && (
+            <>
+              <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+                Service indisponible
+              </h1>
+              <p className="mt-4 text-ink/65">
+                La confirmation des signatures n&apos;est pas encore
+                configurée. Réessayez plus tard.
+              </p>
             </>
           )}
         </div>

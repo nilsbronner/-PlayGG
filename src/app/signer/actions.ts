@@ -50,7 +50,17 @@ export async function submitSignature(
   }
 
   const data = parsed.data;
-  const supabase = createAdminClient();
+
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch {
+    return {
+      status: "error",
+      message:
+        "Le service de signature n'est pas encore configuré, réessayez plus tard.",
+    };
+  }
 
   const { data: existing, error: lookupError } = await supabase
     .from("signatures")

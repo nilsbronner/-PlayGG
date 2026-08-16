@@ -8,7 +8,11 @@ import {
   CHARTER_PRINCIPLES,
   CHARTER_TITLE,
 } from "@/lib/charter";
-import { getPublicSignatories, getSignatureCount } from "@/lib/signatures";
+import {
+  getPublicSignatories,
+  getSignatureCount,
+  type PublicSignatory,
+} from "@/lib/signatures";
 
 // Rendu à la demande : la page appelle Supabase pour le compteur et
 // l'aperçu des signataires, elle ne doit donc pas être pré-rendue au build
@@ -18,11 +22,26 @@ export const dynamic = "force-dynamic";
 
 const PREVIEW_LIMIT = 6;
 
+async function loadHomeData(): Promise<{
+  count: number;
+  recentSignatories: PublicSignatory[];
+} | null> {
+  // Tant que Supabase n'est pas configuré (ou momentanément indisponible),
+  // on masque simplement le compteur et l'aperçu du mur plutôt que de
+  // planter toute la page — la charte et le CTA restent utilisables.
+  try {
+    const [count, recentSignatories] = await Promise.all([
+      getSignatureCount(),
+      getPublicSignatories({ filter: "all", limit: PREVIEW_LIMIT }),
+    ]);
+    return { count, recentSignatories };
+  } catch {
+    return null;
+  }
+}
+
 export default async function HomePage() {
-  const [count, recentSignatories] = await Promise.all([
-    getSignatureCount(),
-    getPublicSignatories({ filter: "all", limit: PREVIEW_LIMIT }),
-  ]);
+  const homeData = await loadHomeData();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -47,12 +66,14 @@ export default async function HomePage() {
             <Link href="/signer" className="btn-primary">
               Signer la Charte
             </Link>
-            <p className="text-sm text-ink/55">
-              <span className="font-sans text-base font-bold text-ink">
-                <SignatureCounter initialCount={count} />
-              </span>{" "}
-              signataires déjà engagé·e·s
-            </p>
+            {homeData && (
+              <p className="text-sm text-ink/55">
+                <span className="font-sans text-base font-bold text-ink">
+                  <SignatureCounter initialCount={homeData.count} />
+                </span>{" "}
+                signataires déjà engagé·e·s
+              </p>
+            )}
           </div>
         </section>
 
@@ -80,19 +101,25 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-3xl px-6 py-14">
-          <div className="flex items-baseline justify-between gap-4">
-            <h2 className="font-display text-2xl uppercase tracking-wide">
-              Derniers signataires
-            </h2>
-            <Link href="/signataires" className="text-sm font-bold text-violet hover:underline">
-              Voir tout le mur →
-            </Link>
-          </div>
-          <div className="mt-6">
-            <SignatoryWall initialSignatories={recentSignatories} limit={PREVIEW_LIMIT} compact />
-          </div>
-        </section>
+        {homeData && (
+          <section className="mx-auto max-w-3xl px-6 py-14">
+            <div className="flex items-baseline justify-between gap-4">
+              <h2 className="font-display text-2xl uppercase tracking-wide">
+                Derniers signataires
+              </h2>
+              <Link href="/signataires" className="text-sm font-bold text-violet hover:underline">
+                Voir tout le mur →
+              </Link>
+            </div>
+            <div className="mt-6">
+              <SignatoryWall
+                initialSignatories={homeData.recentSignatories}
+                limit={PREVIEW_LIMIT}
+                compact
+              />
+            </div>
+          </section>
+        )}
 
         <section className="mx-auto max-w-3xl px-6 pb-24">
           <div className="rounded-2xl bg-ink px-8 py-10 text-center sm:px-16">
