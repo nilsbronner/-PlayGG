@@ -1,9 +1,9 @@
 # #PlayGG — Site de signature de la Charte
 
 Site annexe indépendant de SPLASH : page Charte + formulaire de signature
-avec double opt-in + badge téléchargeable. Correspond au périmètre **MVP**
-du brief de cadrage (pas de mur public, pas de snippet d'intégration, pas de
-back-office — prévus en V2/V3).
+avec double opt-in + badge téléchargeable + mur public des signataires
+(temps réel par rafraîchissement automatique) + FAQ. Pas encore de snippet
+d'intégration ni de back-office admin — prévus en V3.
 
 ## Stack
 
@@ -68,6 +68,17 @@ npm run dev
 3. Déploie. Ajuste `NEXT_PUBLIC_SITE_URL` une fois le domaine définitif
    (`playgg.fr` ou équivalent) branché sur le projet Vercel.
 
+## Mur des signataires et compteur « temps réel »
+
+`/signataires` et le bloc « Derniers signataires » de la page d'accueil
+s'appuient sur `GET /api/signatures/wall` et `GET /api/signatures/count` —
+des Route Handlers Next.js qui interrogent Supabase côté serveur avec la
+clé `service_role` et ne renvoient jamais la colonne `email`. Le "temps
+réel" est un rafraîchissement automatique côté client (toutes les ~8-10s),
+pas un websocket — suffisant à cette échelle, sans configuration Supabase
+Realtime supplémentaire. Aucune policy RLS publique n'est nécessaire : le
+navigateur n'a jamais de clé Supabase, tout passe par ces routes.
+
 ## Ce qui reste à trancher avant mise en ligne publique
 
 Repris du brief de cadrage — voir aussi les pages `/confidentialite` et
@@ -76,15 +87,12 @@ Repris du brief de cadrage — voir aussi les pages `/confidentialite` et
 - Nom de domaine définitif.
 - Responsable de traitement / DPO pour ce site.
 - Durée de conservation exacte des signatures.
-- Texte définitif de la charte (`src/lib/charter.ts` contient un texte
-  provisoire à remplacer par celui de `splash.gg/charte`).
 - Anti-abus : le formulaire a un champ honeypot, mais pas encore de captcha
   (Turnstile/hCaptcha) — à ajouter si le spam devient un problème.
 
-## Prochaines phases (hors scope de ce site MVP)
+## Prochaines phases (hors scope de ce site)
 
-- **V2** : mur des signataires public (vue Postgres dédiée excluant
-  l'email, filtrable individuel/structure), snippet d'intégration HTML,
-  page de vérification publique `/s/[id]`.
+- **V2 restant** : snippet d'intégration HTML, page de vérification
+  publique `/s/[id]` prouvant l'authenticité d'un badge.
 - **V3** : back-office admin (Supabase Auth), export RGPD en un clic,
   statistiques, modération.

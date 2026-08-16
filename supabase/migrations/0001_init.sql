@@ -32,14 +32,18 @@ create table if not exists confirmation_tokens (
 create index if not exists confirmation_tokens_signature_id_idx
   on confirmation_tokens (signature_id);
 
+-- Accélère le mur public et le compteur (filtrage par statut confirmé/public/non révoqué).
+create index if not exists signatures_public_wall_idx
+  on signatures (confirmed_at desc)
+  where confirmed_at is not null and revoked_at is null and consent_public_display = true;
+
 -- Row Level Security : deny-by-default. Aucune policy n'est créée ici :
 -- toutes les lectures/écritures de l'application passent par la clé
 -- service_role (Server Actions / Route Handlers Next.js côté serveur), qui
 -- contourne le RLS. Le client (navigateur) n'a jamais accès direct à ces
--- tables. Quand le mur public des signataires (V2) sera construit, créer
--- une vue dédiée qui exclut la colonne `email` et n'expose que les lignes
--- où `confirmed_at is not null and consent_public_display = true and
--- revoked_at is null`, avec une policy de lecture publique sur cette vue
--- uniquement — jamais sur la table `signatures` elle-même.
+-- tables — y compris le mur public des signataires et le compteur, qui sont
+-- servis par des Route Handlers Next.js (/api/signatures/*) interrogeant
+-- Supabase côté serveur et ne renvoyant jamais la colonne `email`. Aucune
+-- policy publique n'est donc nécessaire sur ces tables.
 alter table signatures enable row level security;
 alter table confirmation_tokens enable row level security;

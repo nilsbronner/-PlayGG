@@ -21,10 +21,17 @@ export const signatureSchema = z.object({
   profileUrl: z
     .string()
     .trim()
-    .url("Doit être une URL valide (https://...).")
     .max(300)
     .optional()
-    .or(z.literal("")),
+    .or(z.literal(""))
+    .refine((value) => {
+      if (!value) return true;
+      try {
+        return new URL(value).protocol === "https:" || new URL(value).protocol === "http:";
+      } catch {
+        return false;
+      }
+    }, "Doit être une URL http(s) valide (https://...)."),
   consentCharter: z
     .boolean()
     .refine((v) => v === true, "Vous devez accepter les principes de la charte."),
