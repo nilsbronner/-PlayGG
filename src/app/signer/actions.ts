@@ -18,11 +18,10 @@ function rawFromFormData(formData: FormData) {
   return {
     name: String(formData.get("name") ?? ""),
     email: String(formData.get("email") ?? ""),
+    quality: String(formData.get("quality") ?? ""),
     organisation: String(formData.get("organisation") ?? ""),
-    profileUrl: String(formData.get("profileUrl") ?? ""),
     consentCharter: formData.get("consentCharter") === "on",
     consentPublicDisplay: formData.get("consentPublicDisplay") === "on",
-    consentPrivacy: formData.get("consentPrivacy") === "on",
     website: String(formData.get("website") ?? ""),
   };
 }
@@ -90,11 +89,15 @@ export async function submitSignature(
       .from("signatures")
       .update({
         name: data.name,
+        quality: data.quality,
         organisation: data.organisation || null,
-        profile_url: data.profileUrl || null,
         consent_charter: data.consentCharter,
         consent_public_display: data.consentPublicDisplay,
-        consent_privacy: data.consentPrivacy,
+        // Le traitement de base (signature + email de confirmation) repose
+        // sur l'exécution de la demande, pas sur un consentement distinct :
+        // il n'y a donc plus de case à cocher dédiée, seulement un lien
+        // "en savoir plus" vers la politique de confidentialité.
+        consent_privacy: true,
       })
       .eq("id", signatureId);
 
@@ -110,11 +113,11 @@ export async function submitSignature(
       .insert({
         name: data.name,
         email: data.email,
+        quality: data.quality,
         organisation: data.organisation || null,
-        profile_url: data.profileUrl || null,
         consent_charter: data.consentCharter,
         consent_public_display: data.consentPublicDisplay,
-        consent_privacy: data.consentPrivacy,
+        consent_privacy: true,
       })
       .select("id")
       .single();

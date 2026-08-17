@@ -27,8 +27,8 @@ async function loadHomeData(): Promise<{
   recentSignatories: PublicSignatory[];
 } | null> {
   // Tant que Supabase n'est pas configuré (ou momentanément indisponible),
-  // on masque simplement le compteur et l'aperçu du mur plutôt que de
-  // planter toute la page — la charte et le CTA restent utilisables.
+  // on masque simplement l'aperçu du mur plutôt que de planter toute la
+  // page — la charte et le CTA restent utilisables.
   try {
     const [count, recentSignatories] = await Promise.all([
       getSignatureCount(),
@@ -63,18 +63,10 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <div className="mt-9 flex flex-wrap items-center gap-6">
+          <div className="mt-9">
             <Link href="/signer" className="btn-primary">
               Signer la Charte
             </Link>
-            {homeData && (
-              <p className="text-sm text-ink/55">
-                <span className="font-sans text-base font-bold text-ink">
-                  <SignatureCounter initialCount={homeData.count} />
-                </span>{" "}
-                signataires déjà engagé·e·s
-              </p>
-            )}
           </div>
         </section>
 
@@ -105,13 +97,19 @@ export default async function HomePage() {
         {homeData && (
           <section className="mx-auto max-w-3xl px-6 py-14">
             <div className="flex items-baseline justify-between gap-4">
-              <h2 className="font-display text-base uppercase sm:text-lg">
-                Derniers signataires
-              </h2>
+              <h2 className="font-display text-base uppercase sm:text-lg">Ils #PlayGG</h2>
               <Link href="/signataires" className="text-sm font-bold text-violet hover:underline">
                 Voir tout le mur →
               </Link>
             </div>
+            <p className="mt-3 max-w-xl text-ink/65">
+              Déjà{" "}
+              <span className="font-sans font-bold text-ink">
+                <SignatureCounter initialCount={homeData.count} />
+              </span>{" "}
+              personnes et structures ont choisi d&apos;adhérer à la Charte. Leurs noms
+              apparaissent ici avec leur accord.
+            </p>
             <div className="mt-6">
               <SignatoryWall
                 initialSignatories={homeData.recentSignatories}
@@ -125,21 +123,15 @@ export default async function HomePage() {
         <section className="mx-auto max-w-3xl px-6 pb-24">
           <div className="rounded-2xl bg-ink px-8 py-10 text-center sm:px-16">
             <h2 className="font-display text-base uppercase text-cream sm:text-xl">
-              Prêt·e à vous engager&nbsp;?
+              Pour un esport mixte et responsable, je persiste et je signe.
             </h2>
             <p className="mx-auto mt-3 max-w-md text-sm text-cream/70">
-              La signature prend deux minutes. Vous recevrez un badge à
-              afficher sur votre profil ou votre site.
+              Ça me prend deux minutes chrono. Et je peux afficher le badge que je vais
+              recevoir en retour, si je veux aller plus loin.
             </p>
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+            <div className="mt-7 flex items-center justify-center">
               <Link href="/signer" className="btn-primary">
-                Signer la Charte
-              </Link>
-              <Link
-                href="/faq"
-                className="text-sm font-bold text-cream/70 underline hover:text-cream"
-              >
-                Ce que ça engage, en détail
+                Signer #PlayGG
               </Link>
             </div>
           </div>

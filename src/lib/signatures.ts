@@ -1,15 +1,16 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase-admin";
+import type { Quality } from "@/lib/quality";
 
 export type PublicSignatory = {
   id: string;
   name: string;
+  quality: Quality | null;
   organisation: string | null;
-  profile_url: string | null;
   confirmed_at: string;
 };
 
-export type SignatoryFilter = "all" | "individual" | "organisation";
+export type SignatoryFilter = "all" | Quality;
 
 export async function getSignatureCount(): Promise<number> {
   const supabase = createAdminClient();
@@ -29,37 +30,27 @@ export async function getPublicSignatories(params: {
 }): Promise<PublicSignatory[]> {
   const { filter = "all", limit = 60 } = params;
   const supabase = createAdminClient();
-  const columns = "id, name, organisation, profile_url, confirmed_at";
+  const columns = "id, name, quality, organisation, confirmed_at";
 
   const { data, error } =
-    filter === "individual"
+    filter === "all"
       ? await supabase
           .from("signatures")
           .select(columns)
           .not("confirmed_at", "is", null)
           .is("revoked_at", null)
           .eq("consent_public_display", true)
-          .is("organisation", null)
           .order("confirmed_at", { ascending: false })
           .limit(limit)
-      : filter === "organisation"
-        ? await supabase
-            .from("signatures")
-            .select(columns)
-            .not("confirmed_at", "is", null)
-            .is("revoked_at", null)
-            .eq("consent_public_display", true)
-            .not("organisation", "is", null)
-            .order("confirmed_at", { ascending: false })
-            .limit(limit)
-        : await supabase
-            .from("signatures")
-            .select(columns)
-            .not("confirmed_at", "is", null)
-            .is("revoked_at", null)
-            .eq("consent_public_display", true)
-            .order("confirmed_at", { ascending: false })
-            .limit(limit);
+      : await supabase
+          .from("signatures")
+          .select(columns)
+          .not("confirmed_at", "is", null)
+          .is("revoked_at", null)
+          .eq("consent_public_display", true)
+          .eq("quality", filter)
+          .order("confirmed_at", { ascending: false })
+          .limit(limit);
 
   if (error) throw error;
   return (data ?? []) as PublicSignatory[];

@@ -2,40 +2,26 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { PublicSignatory, SignatoryFilter } from "@/lib/signatures";
+import { QUALITIES, QUALITY_LABELS } from "@/lib/quality";
 
 const POLL_INTERVAL_MS = 10000;
 
 const FILTERS: { value: SignatoryFilter; label: string }[] = [
   { value: "all", label: "Tous" },
-  { value: "individual", label: "Individuel" },
-  { value: "organisation", label: "Structures" },
+  ...QUALITIES.map((quality) => ({ value: quality, label: QUALITY_LABELS[quality].plural })),
 ];
-
-function isSafeHttpUrl(value: string) {
-  try {
-    const url = new URL(value);
-    return url.protocol === "https:" || url.protocol === "http:";
-  } catch {
-    return false;
-  }
-}
 
 function SignatoryCard({ signatory }: { signatory: PublicSignatory }) {
   return (
     <li className="rounded-xl border border-ink/10 bg-surface p-4 transition hover:border-violet/40">
       <p className="font-sans text-base font-bold text-ink">{signatory.name}</p>
+      {signatory.quality && (
+        <p className="mt-0.5 text-sm text-violet">
+          {QUALITY_LABELS[signatory.quality].singular}
+        </p>
+      )}
       {signatory.organisation && (
         <p className="mt-0.5 text-sm text-ink/55">{signatory.organisation}</p>
-      )}
-      {signatory.profile_url && isSafeHttpUrl(signatory.profile_url) && (
-        <a
-          href={signatory.profile_url}
-          target="_blank"
-          rel="noopener noreferrer nofollow ugc"
-          className="mt-2 inline-block text-sm font-semibold text-violet hover:underline"
-        >
-          Voir le profil ↗
-        </a>
       )}
     </li>
   );
@@ -83,7 +69,7 @@ export function SignatoryWall({
   return (
     <div>
       {!compact && (
-        <div className="mb-6 flex gap-2">
+        <div className="mb-6 flex flex-wrap gap-2">
           {FILTERS.map((f) => (
             <button
               key={f.value}
@@ -103,7 +89,7 @@ export function SignatoryWall({
 
       {signatories.length === 0 ? (
         <p className="rounded-xl border border-dashed border-ink/15 px-5 py-8 text-center text-ink/50">
-          Soyez parmi les premiers signataires visibles ici.
+          Les premiers signataires
         </p>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

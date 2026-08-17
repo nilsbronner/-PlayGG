@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitSignature, type SignatureFormState } from "@/app/signer/actions";
+import { QUALITIES, QUALITY_LABELS } from "@/lib/quality";
 
 const initialState: SignatureFormState = { status: "idle" };
 
@@ -10,7 +11,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <button type="submit" className="btn-primary w-full sm:w-auto" disabled={pending}>
-      {pending ? "Envoi en cours…" : "Signer la Charte"}
+      {pending ? "Envoi en cours…" : "Je signe #PlayGG"}
     </button>
   );
 }
@@ -34,7 +35,7 @@ export function SignatureForm() {
 
       <div>
         <label htmlFor="name" className="field-label">
-          Nom ou pseudonyme <span className="text-danger">*</span>
+          Votre nom ou pseudonyme
         </label>
         <input id="name" name="name" type="text" required className="field-input" />
         {state.fieldErrors?.name && <p className="field-error">{state.fieldErrors.name}</p>}
@@ -42,38 +43,40 @@ export function SignatureForm() {
 
       <div>
         <label htmlFor="email" className="field-label">
-          Email <span className="text-danger">*</span>
+          Votre adresse e-mail
         </label>
         <input id="email" name="email" type="email" required className="field-input" />
         <p className="mt-1.5 text-sm text-ink/50">
-          Utilisé uniquement pour confirmer votre signature. Jamais affiché publiquement.
+          Elle nous permet de confirmer votre signature. Elle ne sera pas publiée.
         </p>
         {state.fieldErrors?.email && <p className="field-error">{state.fieldErrors.email}</p>}
       </div>
 
+      <fieldset>
+        <legend className="field-label">Vous signez en tant que</legend>
+        <div className="space-y-2.5">
+          {QUALITIES.map((quality) => (
+            <label key={quality} className="flex items-center gap-2.5">
+              <input
+                type="radio"
+                name="quality"
+                value={quality}
+                required
+                className="h-4 w-4 flex-none border-ink/30 text-violet focus:ring-violet"
+              />
+              <span className="text-sm text-ink/80">{QUALITY_LABELS[quality].singular}</span>
+            </label>
+          ))}
+        </div>
+        {state.fieldErrors?.quality && <p className="field-error">{state.fieldErrors.quality}</p>}
+      </fieldset>
+
       <div>
         <label htmlFor="organisation" className="field-label">
-          Structure / club / marque{" "}
+          Structure / club / entreprise{" "}
           <span className="font-normal text-ink/40">(optionnel)</span>
         </label>
         <input id="organisation" name="organisation" type="text" className="field-input" />
-      </div>
-
-      <div>
-        <label htmlFor="profileUrl" className="field-label">
-          Lien de profil ou de site{" "}
-          <span className="font-normal text-ink/40">(optionnel)</span>
-        </label>
-        <input
-          id="profileUrl"
-          name="profileUrl"
-          type="url"
-          placeholder="https://…"
-          className="field-input"
-        />
-        {state.fieldErrors?.profileUrl && (
-          <p className="field-error">{state.fieldErrors.profileUrl}</p>
-        )}
       </div>
 
       <div className="space-y-4 border-t border-ink/10 pt-6">
@@ -85,8 +88,7 @@ export function SignatureForm() {
             className="mt-1 h-4 w-4 flex-none rounded border-ink/30 text-violet focus:ring-violet"
           />
           <span className="text-sm text-ink/80">
-            J&apos;ai lu et j&apos;accepte les 3 principes de la Charte #PlayGG.{" "}
-            <span className="text-danger">*</span>
+            J&apos;adhère aux trois principes de la Charte #PlayGG.
           </span>
         </label>
         {state.fieldErrors?.consentCharter && (
@@ -100,31 +102,20 @@ export function SignatureForm() {
             className="mt-1 h-4 w-4 flex-none rounded border-ink/30 text-violet focus:ring-violet"
           />
           <span className="text-sm text-ink/80">
-            J&apos;accepte d&apos;apparaître sur le mur public des signataires.
+            J&apos;accepte que mon nom ou pseudonyme apparaisse sur le mur des signataires.
           </span>
         </label>
 
-        <label className="flex items-start gap-3">
-          <input
-            type="checkbox"
-            name="consentPrivacy"
-            required
-            className="mt-1 h-4 w-4 flex-none rounded border-ink/30 text-violet focus:ring-violet"
-          />
-          <span className="text-sm text-ink/80">
-            J&apos;accepte le traitement de mes données conformément à la{" "}
-            <a href="/confidentialite" className="text-violet underline">
-              politique de confidentialité
-            </a>
-            . <span className="text-danger">*</span>
-          </span>
-        </label>
-        {state.fieldErrors?.consentPrivacy && (
-          <p className="field-error -mt-2">{state.fieldErrors.consentPrivacy}</p>
-        )}
+        <a href="/confidentialite" className="inline-block text-sm font-semibold text-violet underline">
+          En savoir plus sur l&apos;utilisation de vos données →
+        </a>
       </div>
 
       <SubmitButton />
+      <p className="text-sm text-ink/50">
+        Je recevrai un email de confirmation. Ma signature ne sera effective qu&apos;après
+        validation du lien.
+      </p>
     </form>
   );
 }

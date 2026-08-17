@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { getPublicSignatories, type SignatoryFilter } from "@/lib/signatures";
+import { QUALITIES } from "@/lib/quality";
 
 export const dynamic = "force-dynamic";
 
-const VALID_FILTERS: SignatoryFilter[] = ["all", "individual", "organisation"];
+const VALID_FILTERS: SignatoryFilter[] = ["all", ...QUALITIES];
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

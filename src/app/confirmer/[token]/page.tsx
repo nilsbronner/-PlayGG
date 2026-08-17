@@ -83,12 +83,9 @@ export default async function ConfirmTokenPage({
                 <span className="font-display text-3xl text-blue">✓</span>
               </div>
               <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
-                Signature confirmée
+                Bienvenue dans #PlayGG&nbsp;!
               </h1>
-              <p className="mt-4 text-ink/65">
-                Merci {result.name}, votre engagement pour un esport
-                responsable est désormais officiel.
-              </p>
+              <p className="mt-4 text-ink/65">Récupérez votre badge, {result.name}.</p>
 
               <div className="mt-10 rounded-2xl border border-ink/10 bg-surface p-6">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
