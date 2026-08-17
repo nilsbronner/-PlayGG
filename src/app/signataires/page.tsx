@@ -44,7 +44,7 @@ export default async function SignatairesPage() {
           <p className="mb-3 font-sans text-xs font-bold uppercase tracking-[0.14em] text-violet">
             Preuve sociale
           </p>
-          <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+          <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
             Les signataires
           </h1>
 

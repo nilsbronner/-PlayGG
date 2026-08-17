@@ -12,7 +12,7 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-orange px-7 py-3.5 font-sans text-base font-bold text-white transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue to-violet px-7 py-3.5 font-sans text-base font-bold text-white transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-secondary {
@@ -24,10 +24,10 @@
   }
 
   .field-input {
-    @apply w-full rounded-lg border border-ink/15 bg-white px-4 py-3 font-sans text-base text-ink placeholder:text-ink/35 focus:border-violet focus:outline-none focus:ring-2 focus:ring-violet/30;
+    @apply w-full rounded-lg border border-ink/15 bg-surface px-4 py-3 font-sans text-base text-ink placeholder:text-ink/35 focus:border-violet focus:outline-none focus:ring-2 focus:ring-violet/30;
   }
 
   .field-error {
-    @apply mt-1.5 text-sm font-medium text-orange;
+    @apply mt-1.5 text-sm font-medium text-danger;
   }
 }

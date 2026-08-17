@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Anton, Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const anton = Anton({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-anton",
+// Auto-hébergée : Press Start 2P dessine mal ses majuscules accentuées
+// (le "É" de "RESPONSABILITÉ" ressort comme un "é" minuscule dépareillé,
+// vérifié en rendu réel) — Silkscreen a le même esprit arcade/pixel avec
+// des accents français correctement dessinés.
+const arcade = localFont({
+  src: "../fonts/silkscreen-bold.ttf",
+  weight: "700",
+  variable: "--font-arcade",
   display: "swap",
 });
 
@@ -28,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${anton.variable} ${jakarta.variable}`}>
+    <html lang="fr" className={`${arcade.variable} ${jakarta.variable}`}>
       <body className="bg-cream text-ink font-sans antialiased">
         {children}
       </body>

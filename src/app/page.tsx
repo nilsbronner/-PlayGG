@@ -53,7 +53,7 @@ export default async function HomePage() {
           <p className="mb-4 font-sans text-xs font-bold uppercase tracking-[0.14em] text-violet">
             La Charte #PlayGG
           </p>
-          <h1 className="font-display text-4xl uppercase leading-[0.95] text-ink sm:text-6xl">
+          <h1 className="font-display text-xl uppercase leading-relaxed text-ink sm:text-3xl">
             {CHARTER_TITLE}
           </h1>
 
@@ -83,10 +83,10 @@ export default async function HomePage() {
             {CHARTER_PRINCIPLES.map((principle, index) => (
               <div key={principle.slug} className="border-t border-ink/10 pt-8 first:border-t-0 first:pt-0">
                 <div className="flex items-baseline gap-4">
-                  <span className="font-display text-3xl text-orange">
+                  <span className="font-display text-xl text-blue">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h2 className="font-display text-2xl uppercase tracking-wide">
+                  <h2 className="font-display text-base uppercase sm:text-lg">
                     {principle.title}
                   </h2>
                 </div>
@@ -105,7 +105,7 @@ export default async function HomePage() {
         {homeData && (
           <section className="mx-auto max-w-3xl px-6 py-14">
             <div className="flex items-baseline justify-between gap-4">
-              <h2 className="font-display text-2xl uppercase tracking-wide">
+              <h2 className="font-display text-base uppercase sm:text-lg">
                 Derniers signataires
               </h2>
               <Link href="/signataires" className="text-sm font-bold text-violet hover:underline">
@@ -124,7 +124,7 @@ export default async function HomePage() {
 
         <section className="mx-auto max-w-3xl px-6 pb-24">
           <div className="rounded-2xl bg-ink px-8 py-10 text-center sm:px-16">
-            <h2 className="font-display text-2xl uppercase text-cream sm:text-3xl">
+            <h2 className="font-display text-base uppercase text-cream sm:text-xl">
               Prêt·e à vous engager&nbsp;?
             </h2>
             <p className="mx-auto mt-3 max-w-md text-sm text-cream/70">

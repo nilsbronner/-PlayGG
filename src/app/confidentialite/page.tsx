@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <SiteHeader />
       <main className="flex-1">
         <div className="mx-auto max-w-2xl px-6 py-16">
-          <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+          <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
             Politique de confidentialité
           </h1>
           <p className="mt-3 text-sm text-ink/50">

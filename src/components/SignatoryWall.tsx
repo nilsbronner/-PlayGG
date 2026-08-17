@@ -22,7 +22,7 @@ function isSafeHttpUrl(value: string) {
 
 function SignatoryCard({ signatory }: { signatory: PublicSignatory }) {
   return (
-    <li className="rounded-xl border border-ink/10 bg-white p-4 transition hover:border-violet/40">
+    <li className="rounded-xl border border-ink/10 bg-surface p-4 transition hover:border-violet/40">
       <p className="font-sans text-base font-bold text-ink">{signatory.name}</p>
       {signatory.organisation && (
         <p className="mt-0.5 text-sm text-ink/55">{signatory.organisation}</p>

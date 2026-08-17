@@ -5,13 +5,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#F8F0EA",
-        ink: "#161616",
-        orange: "#FF5011",
-        violet: "#7F5CF9",
+        cream: "#FFFFFF",
+        surface: "#F4F5FC",
+        ink: "#14141C",
+        blue: "#2F3EE0",
+        violet: "#8B4FF0",
+        danger: "#E5335F",
       },
       fontFamily: {
-        display: ["var(--font-anton)"],
+        display: ["var(--font-arcade)"],
         sans: ["var(--font-jakarta)"],
       },
     },

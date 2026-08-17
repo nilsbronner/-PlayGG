@@ -21,7 +21,7 @@ export function SignatureForm() {
   return (
     <form action={formAction} className="space-y-6" noValidate>
       {state.status === "error" && state.message && (
-        <p className="rounded-lg bg-orange/10 px-4 py-3 text-sm font-medium text-orange">
+        <p className="rounded-lg bg-danger/10 px-4 py-3 text-sm font-medium text-danger">
           {state.message}
         </p>
       )}
@@ -34,7 +34,7 @@ export function SignatureForm() {
 
       <div>
         <label htmlFor="name" className="field-label">
-          Nom ou pseudonyme <span className="text-orange">*</span>
+          Nom ou pseudonyme <span className="text-danger">*</span>
         </label>
         <input id="name" name="name" type="text" required className="field-input" />
         {state.fieldErrors?.name && <p className="field-error">{state.fieldErrors.name}</p>}
@@ -42,7 +42,7 @@ export function SignatureForm() {
 
       <div>
         <label htmlFor="email" className="field-label">
-          Email <span className="text-orange">*</span>
+          Email <span className="text-danger">*</span>
         </label>
         <input id="email" name="email" type="email" required className="field-input" />
         <p className="mt-1.5 text-sm text-ink/50">
@@ -86,7 +86,7 @@ export function SignatureForm() {
           />
           <span className="text-sm text-ink/80">
             J&apos;ai lu et j&apos;accepte les 3 principes de la Charte #PlayGG.{" "}
-            <span className="text-orange">*</span>
+            <span className="text-danger">*</span>
           </span>
         </label>
         {state.fieldErrors?.consentCharter && (
@@ -116,7 +116,7 @@ export function SignatureForm() {
             <a href="/confidentialite" className="text-violet underline">
               politique de confidentialité
             </a>
-            . <span className="text-orange">*</span>
+            . <span className="text-danger">*</span>
           </span>
         </label>
         {state.fieldErrors?.consentPrivacy && (

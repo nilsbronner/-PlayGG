@@ -38,8 +38,8 @@ function renderConfirmationEmail({
 }) {
   const escapedName = name.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c] ?? c));
   return `
-    <div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto; color: #161616;">
-      <p style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #7F5CF9; font-weight: 700; margin: 0 0 8px;">#PlayGG</p>
+    <div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto; color: #14141C;">
+      <p style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8B4FF0; font-weight: 700; margin: 0 0 8px;">#PlayGG</p>
       <h1 style="font-size: 20px; margin: 0 0 16px;">Bonjour ${escapedName},</h1>
       <p style="font-size: 15px; line-height: 1.5;">
         Merci de vous engager pour un esport mixte et responsable. Il ne reste
@@ -47,11 +47,11 @@ function renderConfirmationEmail({
         la Charte #PlayGG soit effective.
       </p>
       <p style="margin: 28px 0;">
-        <a href="${confirmUrl}" style="background: #FF5011; color: #FFFFFF; text-decoration: none; padding: 12px 22px; border-radius: 8px; font-weight: 700; display: inline-block;">
+        <a href="${confirmUrl}" style="background: #2F3EE0; color: #FFFFFF; text-decoration: none; padding: 12px 22px; border-radius: 8px; font-weight: 700; display: inline-block;">
           Confirmer ma signature
         </a>
       </p>
-      <p style="font-size: 13px; color: rgba(22,22,22,0.6);">
+      <p style="font-size: 13px; color: rgba(20,20,28,0.6);">
         Ce lien expire dans 48 heures. Si vous n'êtes pas à l'origine de cette
         demande, ignorez simplement cet email.
       </p>

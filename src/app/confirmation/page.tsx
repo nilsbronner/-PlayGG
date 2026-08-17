@@ -15,7 +15,7 @@ export default function ConfirmationPage() {
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-violet/10">
             <span className="font-display text-3xl text-violet">@</span>
           </div>
-          <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+          <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
             Vérifiez votre email
           </h1>
           <p className="mt-4 text-ink/65">

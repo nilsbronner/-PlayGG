@@ -79,10 +79,10 @@ export default async function ConfirmTokenPage({
         <div className="mx-auto max-w-lg px-6 py-24 text-center">
           {result.status === "success" && (
             <>
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-orange/10">
-                <span className="font-display text-3xl text-orange">✓</span>
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue/10">
+                <span className="font-display text-3xl text-blue">✓</span>
               </div>
-              <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+              <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
                 Signature confirmée
               </h1>
               <p className="mt-4 text-ink/65">
@@ -90,7 +90,7 @@ export default async function ConfirmTokenPage({
                 responsable est désormais officiel.
               </p>
 
-              <div className="mt-10 rounded-2xl border border-ink/10 bg-white p-6">
+              <div className="mt-10 rounded-2xl border border-ink/10 bg-surface p-6">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/api/badge/${result.id}`}
@@ -112,7 +112,7 @@ export default async function ConfirmTokenPage({
 
           {result.status === "expired" && (
             <>
-              <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+              <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
                 Lien expiré
               </h1>
               <p className="mt-4 text-ink/65">
@@ -127,7 +127,7 @@ export default async function ConfirmTokenPage({
 
           {result.status === "invalid" && (
             <>
-              <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+              <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
                 Lien invalide
               </h1>
               <p className="mt-4 text-ink/65">
@@ -141,7 +141,7 @@ export default async function ConfirmTokenPage({
 
           {result.status === "unavailable" && (
             <>
-              <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+              <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
                 Service indisponible
               </h1>
               <p className="mt-4 text-ink/65">

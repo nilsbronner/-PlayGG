@@ -66,7 +66,7 @@ export default function FaqPage() {
           <p className="mb-3 font-sans text-xs font-bold uppercase tracking-[0.14em] text-violet">
             Avant de signer
           </p>
-          <h1 className="font-display text-3xl uppercase leading-tight sm:text-4xl">
+          <h1 className="font-display text-base uppercase leading-relaxed sm:text-2xl">
             Ce que ça engage — et ce que ça n&apos;engage pas
           </h1>
           <p className="mt-4 text-ink/65">
@@ -75,21 +75,21 @@ export default function FaqPage() {
           </p>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2">
-            <div className="rounded-2xl border border-ink/10 bg-white p-6">
-              <h2 className="font-display text-lg uppercase tracking-wide text-ink">
+            <div className="rounded-2xl border border-ink/10 bg-surface p-6">
+              <h2 className="font-display text-sm uppercase text-ink sm:text-base">
                 Vous vous engagez à
               </h2>
               <ul className="mt-4 space-y-3">
                 {COMMITMENTS.map((item) => (
                   <li key={item} className="flex gap-2.5 text-sm leading-relaxed text-ink/70">
-                    <span className="mt-0.5 flex-none font-display text-orange">+</span>
+                    <span className="mt-0.5 flex-none font-display text-blue">+</span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl border border-ink/10 bg-white p-6">
-              <h2 className="font-display text-lg uppercase tracking-wide text-ink">
+            <div className="rounded-2xl border border-ink/10 bg-surface p-6">
+              <h2 className="font-display text-sm uppercase text-ink sm:text-base">
                 La signature ne vous engage pas à
               </h2>
               <ul className="mt-4 space-y-3">
@@ -104,10 +104,10 @@ export default function FaqPage() {
           </div>
 
           <div className="mt-16">
-            <h2 className="font-display text-2xl uppercase tracking-wide">
+            <h2 className="font-display text-base uppercase sm:text-lg">
               Questions fréquentes
             </h2>
-            <div className="mt-6 divide-y divide-ink/10 rounded-2xl border border-ink/10 bg-white">
+            <div className="mt-6 divide-y divide-ink/10 rounded-2xl border border-ink/10 bg-surface">
               {FAQ_ITEMS.map((item) => (
                 <details key={item.question} className="group p-5 open:bg-cream/40">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-sans text-base font-bold text-ink marker:content-none">
