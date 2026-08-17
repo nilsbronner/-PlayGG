@@ -21,12 +21,19 @@ export async function sendConfirmationEmail(params: {
   const resend = new Resend(getEnv("RESEND_API_KEY"));
   const confirmUrl = `${getSiteUrl()}/confirmer/${params.token}`;
 
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: getEnv("RESEND_FROM_EMAIL"),
     to: params.to,
     subject: "Confirmez votre signature de la Charte #PlayGG",
     html: renderConfirmationEmail({ name: params.name, confirmUrl }),
   });
+
+  // Le SDK Resend ne lève pas d'exception sur une erreur API (domaine non
+  // vérifié, adresse refusée...) : il renvoie { data, error } comme
+  // Supabase. Sans ce contrôle, un envoi refusé passait pour un succès.
+  if (error) {
+    throw new Error(`Resend a refusé l'envoi: ${error.name} — ${error.message}`);
+  }
 }
 
 function renderConfirmationEmail({
