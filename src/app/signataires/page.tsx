@@ -27,7 +27,8 @@ async function loadWallData(): Promise<{
       getPublicSignatories({ filter: "all", limit: WALL_LIMIT }),
     ]);
     return { count, signatories };
-  } catch {
+  } catch (error) {
+    console.error("loadWallData failed:", error);
     return null;
   }
 }

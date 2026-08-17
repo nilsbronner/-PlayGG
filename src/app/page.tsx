@@ -35,7 +35,8 @@ async function loadHomeData(): Promise<{
       getPublicSignatories({ filter: "all", limit: PREVIEW_LIMIT }),
     ]);
     return { count, recentSignatories };
-  } catch {
+  } catch (error) {
+    console.error("loadHomeData failed:", error);
     return null;
   }
 }

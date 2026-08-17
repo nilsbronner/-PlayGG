@@ -10,7 +10,8 @@ export async function GET() {
       { count },
       { headers: { "Cache-Control": "public, max-age=0, s-maxage=5, stale-while-revalidate=15" } },
     );
-  } catch {
+  } catch (error) {
+    console.error("GET /api/signatures/count failed:", error);
     return NextResponse.json({ error: "Impossible de charger le compteur." }, { status: 500 });
   }
 }

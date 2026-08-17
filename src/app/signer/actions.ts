@@ -146,7 +146,8 @@ export async function submitSignature(
 
   try {
     await sendConfirmationEmail({ to: data.email, name: data.name, token });
-  } catch {
+  } catch (error) {
+    console.error("sendConfirmationEmail failed:", error);
     return {
       status: "error",
       message:

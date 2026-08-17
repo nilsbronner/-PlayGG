@@ -20,7 +20,8 @@ export async function GET(request: Request) {
       { signatories },
       { headers: { "Cache-Control": "public, max-age=0, s-maxage=5, stale-while-revalidate=15" } },
     );
-  } catch {
+  } catch (error) {
+    console.error("GET /api/signatures/wall failed:", error);
     return NextResponse.json({ error: "Impossible de charger les signataires." }, { status: 500 });
   }
 }
