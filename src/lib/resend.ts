@@ -15,7 +15,7 @@ export function getSiteUrl(): string {
 
 export async function sendConfirmationEmail(params: {
   to: string;
-  name: string;
+  greetingName: string;
   token: string;
 }) {
   const resend = new Resend(getEnv("RESEND_API_KEY"));
@@ -25,7 +25,7 @@ export async function sendConfirmationEmail(params: {
     from: getEnv("RESEND_FROM_EMAIL"),
     to: params.to,
     subject: "Confirmez votre signature de la Charte #PlayGG",
-    html: renderConfirmationEmail({ name: params.name, confirmUrl }),
+    html: renderConfirmationEmail({ name: params.greetingName, confirmUrl }),
   });
 
   // Le SDK Resend ne lève pas d'exception sur une erreur API (domaine non

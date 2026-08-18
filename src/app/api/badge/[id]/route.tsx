@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { formatSignatoryName } from "@/lib/name";
 
 export const runtime = "edge";
 
@@ -28,13 +29,15 @@ export async function GET(
 
   const { data: signature } = await supabase
     .from("signatures")
-    .select("name, organisation, confirmed_at, revoked_at")
+    .select("prenom, nom, pseudo, organisation, confirmed_at, revoked_at")
     .eq("id", id)
     .maybeSingle();
 
   if (!signature || !signature.confirmed_at || signature.revoked_at) {
     return new Response("Badge introuvable", { status: 404 });
   }
+
+  const displayName = formatSignatoryName(signature);
 
   const [arcade, jakarta] = await Promise.all([
     loadFont(ARCADE_TTF_URL),
@@ -83,7 +86,7 @@ export async function GET(
               maxWidth: 620,
             }}
           >
-            {signature.name}
+            {displayName}
           </span>
           {signature.organisation && (
             <span

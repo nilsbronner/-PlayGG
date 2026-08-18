@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { PublicSignatory, SignatoryFilter } from "@/lib/signatures";
 import { QUALITIES, QUALITY_LABELS } from "@/lib/quality";
+import { formatSignatoryName } from "@/lib/name";
 
 const POLL_INTERVAL_MS = 10000;
 
@@ -14,7 +15,7 @@ const FILTERS: { value: SignatoryFilter; label: string }[] = [
 function SignatoryCard({ signatory }: { signatory: PublicSignatory }) {
   return (
     <li className="rounded-xl border border-ink/10 bg-surface p-4 transition hover:border-violet/40">
-      <p className="font-sans text-base font-bold text-ink">{signatory.name}</p>
+      <p className="font-sans text-base font-bold text-ink">{formatSignatoryName(signatory)}</p>
       {signatory.quality && (
         <p className="mt-0.5 text-sm text-violet">
           {QUALITY_LABELS[signatory.quality].singular}

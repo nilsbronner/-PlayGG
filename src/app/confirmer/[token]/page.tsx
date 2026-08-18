@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { greetingName } from "@/lib/name";
 
 export const metadata: Metadata = {
   title: "Confirmation de signature — #PlayGG",
@@ -30,7 +31,7 @@ async function confirmSignature(token: string) {
 
   const { data: signature } = await supabase
     .from("signatures")
-    .select("id, name, confirmed_at, revoked_at")
+    .select("id, prenom, nom, pseudo, confirmed_at, revoked_at")
     .eq("id", tokenRow.signature_id)
     .maybeSingle();
 
@@ -38,9 +39,11 @@ async function confirmSignature(token: string) {
     return { status: "invalid" as const };
   }
 
+  const name = greetingName({ prenom: signature.prenom ?? "", pseudo: signature.pseudo ?? "" });
+
   // Déjà confirmée (ex. clic répété sur le lien) : on affiche simplement le succès.
   if (signature.confirmed_at) {
-    return { status: "success" as const, id: signature.id, name: signature.name };
+    return { status: "success" as const, id: signature.id, name };
   }
 
   if (new Date(tokenRow.expires_at).getTime() < Date.now()) {
@@ -61,7 +64,7 @@ async function confirmSignature(token: string) {
     .update({ used_at: new Date().toISOString() })
     .eq("token", token);
 
-  return { status: "success" as const, id: signature.id, name: signature.name };
+  return { status: "success" as const, id: signature.id, name };
 }
 
 export default async function ConfirmTokenPage({

@@ -5,9 +5,12 @@ import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { sendConfirmationEmail } from "@/lib/resend";
 import { signatureSchema } from "@/lib/schema";
+import { greetingName } from "@/lib/name";
 
 export type SignatureFormValues = {
-  name: string;
+  prenom: string;
+  nom: string;
+  pseudo: string;
   email: string;
   quality: string;
   organisation: string;
@@ -26,7 +29,9 @@ const TOKEN_TTL_HOURS = 48;
 
 function rawFromFormData(formData: FormData) {
   return {
-    name: String(formData.get("name") ?? ""),
+    prenom: String(formData.get("prenom") ?? ""),
+    nom: String(formData.get("nom") ?? ""),
+    pseudo: String(formData.get("pseudo") ?? ""),
     email: String(formData.get("email") ?? ""),
     quality: String(formData.get("quality") ?? ""),
     organisation: String(formData.get("organisation") ?? ""),
@@ -45,7 +50,9 @@ export async function submitSignature(
   // échoue (validation, erreur serveur...), le formulaire doit rester
   // rempli au lieu de forcer la personne à tout retaper.
   const values: SignatureFormValues = {
-    name: raw.name,
+    prenom: raw.prenom,
+    nom: raw.nom,
+    pseudo: raw.pseudo,
     email: raw.email,
     quality: raw.quality,
     organisation: raw.organisation,
@@ -112,7 +119,9 @@ export async function submitSignature(
     const { error: updateError } = await supabase
       .from("signatures")
       .update({
-        name: data.name,
+        prenom: data.prenom || null,
+        nom: data.nom || null,
+        pseudo: data.pseudo || null,
         quality: data.quality,
         organisation: data.organisation || null,
         consent_charter: data.consentCharter,
@@ -136,7 +145,9 @@ export async function submitSignature(
     const { data: inserted, error: insertError } = await supabase
       .from("signatures")
       .insert({
-        name: data.name,
+        prenom: data.prenom || null,
+        nom: data.nom || null,
+        pseudo: data.pseudo || null,
         email: data.email,
         quality: data.quality,
         organisation: data.organisation || null,
@@ -175,7 +186,11 @@ export async function submitSignature(
   }
 
   try {
-    await sendConfirmationEmail({ to: data.email, name: data.name, token });
+    await sendConfirmationEmail({
+      to: data.email,
+      greetingName: greetingName({ prenom: data.prenom, pseudo: data.pseudo }),
+      token,
+    });
   } catch (error) {
     console.error("sendConfirmationEmail failed:", error);
     return {

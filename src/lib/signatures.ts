@@ -4,7 +4,9 @@ import type { Quality } from "@/lib/quality";
 
 export type PublicSignatory = {
   id: string;
-  name: string;
+  prenom: string | null;
+  nom: string | null;
+  pseudo: string | null;
   quality: Quality | null;
   organisation: string | null;
   confirmed_at: string;
@@ -30,7 +32,7 @@ export async function getPublicSignatories(params: {
 }): Promise<PublicSignatory[]> {
   const { filter = "all", limit = 60 } = params;
   const supabase = createAdminClient();
-  const columns = "id, name, quality, organisation, confirmed_at";
+  const columns = "id, prenom, nom, pseudo, quality, organisation, confirmed_at";
 
   const { data, error } =
     filter === "all"

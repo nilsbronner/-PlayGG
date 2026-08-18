@@ -34,19 +34,51 @@ export function SignatureForm() {
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="prenom" className="field-label">
+            Prénom
+          </label>
+          <input
+            id="prenom"
+            name="prenom"
+            type="text"
+            defaultValue={values?.prenom}
+            className="field-input"
+          />
+          {state.fieldErrors?.prenom && <p className="field-error">{state.fieldErrors.prenom}</p>}
+        </div>
+        <div>
+          <label htmlFor="nom" className="field-label">
+            Nom
+          </label>
+          <input
+            id="nom"
+            name="nom"
+            type="text"
+            defaultValue={values?.nom}
+            className="field-input"
+          />
+          {state.fieldErrors?.nom && <p className="field-error">{state.fieldErrors.nom}</p>}
+        </div>
+      </div>
+
       <div>
-        <label htmlFor="name" className="field-label">
-          Votre nom ou pseudonyme
+        <label htmlFor="pseudo" className="field-label">
+          Pseudonyme <span className="font-normal text-ink/40">(optionnel)</span>
         </label>
         <input
-          id="name"
-          name="name"
+          id="pseudo"
+          name="pseudo"
           type="text"
-          required
-          defaultValue={values?.name}
+          defaultValue={values?.pseudo}
           className="field-input"
         />
-        {state.fieldErrors?.name && <p className="field-error">{state.fieldErrors.name}</p>}
+        <p className="mt-1.5 text-sm text-ink/50">
+          Vous pouvez le laisser vide, l&apos;ajouter en complément de votre nom, ou signer
+          uniquement avec un pseudonyme (sans nom ni prénom) si vous préférez rester anonyme.
+        </p>
+        {state.fieldErrors?.pseudo && <p className="field-error">{state.fieldErrors.pseudo}</p>}
       </div>
 
       <div>
