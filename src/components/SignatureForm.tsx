@@ -46,9 +46,7 @@ export function SignatureForm() {
           Votre adresse e-mail
         </label>
         <input id="email" name="email" type="email" required className="field-input" />
-        <p className="mt-1.5 text-sm text-ink/50">
-          Elle nous permet de confirmer votre signature. Elle ne sera pas publiée.
-        </p>
+        <p className="mt-1.5 text-sm text-ink/50">Elle ne sera pas publiée.</p>
         {state.fieldErrors?.email && <p className="field-error">{state.fieldErrors.email}</p>}
       </div>
 
@@ -112,10 +110,7 @@ export function SignatureForm() {
       </div>
 
       <SubmitButton />
-      <p className="text-sm text-ink/50">
-        Je recevrai un email de confirmation. Ma signature ne sera effective qu&apos;après
-        validation du lien.
-      </p>
+      <p className="text-sm text-ink/50">Ma signature sera enregistrée immédiatement.</p>
     </form>
   );
 }

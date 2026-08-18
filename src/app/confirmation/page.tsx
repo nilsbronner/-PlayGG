@@ -1,12 +1,40 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { createAdminClient } from "@/lib/supabase-admin";
 
 export const metadata: Metadata = {
   title: "C'est signé ! — #PlayGG",
 };
 
-export default function ConfirmationPage() {
+export const dynamic = "force-dynamic";
+
+async function loadSignature(id: string) {
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch {
+    return null;
+  }
+
+  const { data } = await supabase
+    .from("signatures")
+    .select("id, name")
+    .eq("id", id)
+    .is("revoked_at", null)
+    .maybeSingle();
+
+  return data;
+}
+
+export default async function ConfirmationPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ id?: string }>;
+}) {
+  const { id } = await searchParams;
+  const signature = id ? await loadSignature(id) : null;
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
@@ -16,20 +44,33 @@ export default function ConfirmationPage() {
             🎮
           </div>
           <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
-            C&apos;est signé !
+            {signature ? <>Bienvenue dans #PlayGG&nbsp;!</> : <>C&apos;est signé&nbsp;!</>}
           </h1>
           <p className="mt-4 text-ink/65">
-            Un email vient de vous être envoyé. Cliquez sur le lien qu&apos;il
-            contient pour confirmer votre signature — il expire dans 48
-            heures.
+            {signature
+              ? `Récupérez votre badge, ${signature.name}.`
+              : "Votre signature a bien été enregistrée."}
           </p>
-          <p className="mt-3 text-sm text-ink/45">
-            Rien reçu&nbsp;? Vérifiez vos spams ou{" "}
-            <a href="/signer" className="text-violet underline">
-              recommencez
-            </a>
-            .
-          </p>
+
+          {signature && (
+            <div className="mt-10 rounded-2xl border border-ink/10 bg-surface p-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/api/badge/${signature.id}`}
+                alt="Badge de signature #PlayGG"
+                width={600}
+                height={315}
+                className="mx-auto w-full max-w-sm rounded-lg"
+              />
+              <a
+                href={`/api/badge/${signature.id}`}
+                download={`playgg-badge-${signature.id}.png`}
+                className="btn-primary mt-6 w-full sm:w-auto"
+              >
+                Télécharger mon badge
+              </a>
+            </div>
+          )}
         </div>
       </main>
       <SiteFooter />
