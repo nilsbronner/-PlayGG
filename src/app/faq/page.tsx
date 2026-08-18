@@ -22,6 +22,11 @@ const FAQ_ITEMS: { question: string; answer: string }[] = [
       "Oui. Vous pouvez signer au nom de votre équipe, club, association, entreprise ou institution.",
   },
   {
+    question: "Pourquoi dois-je confirmer mon adresse e-mail ?",
+    answer:
+      "Pour vérifier que la signature vient bien de vous et éviter les signatures automatisées ou frauduleuses.",
+  },
+  {
     question: "Quelles informations apparaissent sur le mur des signataires ?",
     answer:
       "Votre nom ou pseudonyme, et en quelle qualité si vous l'avez renseigné. Dans tous les cas, votre adresse e-mail n'est jamais publiée.",

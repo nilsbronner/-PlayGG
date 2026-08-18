@@ -23,22 +23,29 @@ export const dynamic = "force-dynamic";
 const PREVIEW_LIMIT = 6;
 
 async function loadHomeData(): Promise<{
-  count: number;
-  recentSignatories: PublicSignatory[];
-} | null> {
-  // Tant que Supabase n'est pas configuré (ou momentanément indisponible),
-  // on masque simplement l'aperçu du mur plutôt que de planter toute la
-  // page — la charte et le CTA restent utilisables.
-  try {
-    const [count, recentSignatories] = await Promise.all([
-      getSignatureCount(),
-      getPublicSignatories({ filter: "all", limit: PREVIEW_LIMIT }),
-    ]);
-    return { count, recentSignatories };
-  } catch (error) {
-    console.error("loadHomeData failed:", error);
-    return null;
+  count: number | null;
+  recentSignatories: PublicSignatory[] | null;
+}> {
+  // Le compteur et l'aperçu du mur sont chargés indépendamment : si l'un
+  // des deux échoue (Supabase pas encore configuré, colonne manquante...),
+  // l'autre doit quand même pouvoir s'afficher plutôt que de disparaître
+  // avec lui.
+  const [countResult, wallResult] = await Promise.allSettled([
+    getSignatureCount(),
+    getPublicSignatories({ filter: "all", limit: PREVIEW_LIMIT }),
+  ]);
+
+  if (countResult.status === "rejected") {
+    console.error("getSignatureCount failed:", countResult.reason);
   }
+  if (wallResult.status === "rejected") {
+    console.error("getPublicSignatories failed:", wallResult.reason);
+  }
+
+  return {
+    count: countResult.status === "fulfilled" ? countResult.value : null,
+    recentSignatories: wallResult.status === "fulfilled" ? wallResult.value : null,
+  };
 }
 
 export default async function HomePage() {
@@ -94,7 +101,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {homeData && (
+        {(homeData.count !== null || homeData.recentSignatories !== null) && (
           <section className="mx-auto max-w-3xl px-6 py-14">
             <div className="flex items-baseline justify-between gap-4">
               <h2 className="font-display text-base uppercase sm:text-lg">Ils #PlayGG</h2>
@@ -102,21 +109,25 @@ export default async function HomePage() {
                 Voir tout le mur →
               </Link>
             </div>
-            <p className="mt-3 max-w-xl text-ink/65">
-              Déjà{" "}
-              <span className="font-sans font-bold text-ink">
-                <SignatureCounter initialCount={homeData.count} />
-              </span>{" "}
-              personnes et structures ont choisi d&apos;adhérer à la Charte. Leurs noms
-              apparaissent ici avec leur accord.
-            </p>
-            <div className="mt-6">
-              <SignatoryWall
-                initialSignatories={homeData.recentSignatories}
-                limit={PREVIEW_LIMIT}
-                compact
-              />
-            </div>
+            {homeData.count !== null && (
+              <p className="mt-3 max-w-xl text-ink/65">
+                Déjà{" "}
+                <span className="font-sans font-bold text-ink">
+                  <SignatureCounter initialCount={homeData.count} />
+                </span>{" "}
+                personnes et structures ont choisi d&apos;adhérer à la Charte. Leurs noms
+                apparaissent ici avec leur accord.
+              </p>
+            )}
+            {homeData.recentSignatories !== null && (
+              <div className="mt-6">
+                <SignatoryWall
+                  initialSignatories={homeData.recentSignatories}
+                  limit={PREVIEW_LIMIT}
+                  compact
+                />
+              </div>
+            )}
           </section>
         )}
 

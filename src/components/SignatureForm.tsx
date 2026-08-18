@@ -18,6 +18,7 @@ function SubmitButton() {
 
 export function SignatureForm() {
   const [state, formAction] = useActionState(submitSignature, initialState);
+  const values = state.values;
 
   return (
     <form action={formAction} className="space-y-6" noValidate>
@@ -37,7 +38,14 @@ export function SignatureForm() {
         <label htmlFor="name" className="field-label">
           Votre nom ou pseudonyme
         </label>
-        <input id="name" name="name" type="text" required className="field-input" />
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          defaultValue={values?.name}
+          className="field-input"
+        />
         {state.fieldErrors?.name && <p className="field-error">{state.fieldErrors.name}</p>}
       </div>
 
@@ -45,8 +53,17 @@ export function SignatureForm() {
         <label htmlFor="email" className="field-label">
           Votre adresse e-mail
         </label>
-        <input id="email" name="email" type="email" required className="field-input" />
-        <p className="mt-1.5 text-sm text-ink/50">Elle ne sera pas publiée.</p>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          defaultValue={values?.email}
+          className="field-input"
+        />
+        <p className="mt-1.5 text-sm text-ink/50">
+          Elle nous permet de confirmer votre signature. Elle ne sera pas publiée.
+        </p>
         {state.fieldErrors?.email && <p className="field-error">{state.fieldErrors.email}</p>}
       </div>
 
@@ -60,6 +77,7 @@ export function SignatureForm() {
                 name="quality"
                 value={quality}
                 required
+                defaultChecked={values?.quality === quality}
                 className="h-4 w-4 flex-none border-ink/30 text-violet focus:ring-violet"
               />
               <span className="text-sm text-ink/80">{QUALITY_LABELS[quality].singular}</span>
@@ -74,7 +92,13 @@ export function SignatureForm() {
           Structure / club / entreprise{" "}
           <span className="font-normal text-ink/40">(optionnel)</span>
         </label>
-        <input id="organisation" name="organisation" type="text" className="field-input" />
+        <input
+          id="organisation"
+          name="organisation"
+          type="text"
+          defaultValue={values?.organisation}
+          className="field-input"
+        />
       </div>
 
       <div className="space-y-4 border-t border-ink/10 pt-6">
@@ -83,6 +107,7 @@ export function SignatureForm() {
             type="checkbox"
             name="consentCharter"
             required
+            defaultChecked={values?.consentCharter}
             className="mt-1 h-4 w-4 flex-none rounded border-ink/30 text-violet focus:ring-violet"
           />
           <span className="text-sm text-ink/80">
@@ -97,6 +122,7 @@ export function SignatureForm() {
           <input
             type="checkbox"
             name="consentPublicDisplay"
+            defaultChecked={values?.consentPublicDisplay}
             className="mt-1 h-4 w-4 flex-none rounded border-ink/30 text-violet focus:ring-violet"
           />
           <span className="text-sm text-ink/80">
@@ -110,7 +136,10 @@ export function SignatureForm() {
       </div>
 
       <SubmitButton />
-      <p className="text-sm text-ink/50">Ma signature sera enregistrée immédiatement.</p>
+      <p className="text-sm text-ink/50">
+        Je recevrai un email de confirmation. Ma signature ne sera effective qu&apos;après
+        validation du lien.
+      </p>
     </form>
   );
 }
