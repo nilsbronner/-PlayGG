@@ -6,6 +6,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import { sendConfirmationEmail } from "@/lib/resend";
 import { signatureSchema } from "@/lib/schema";
 import { greetingName } from "@/lib/name";
+import { SIGNUP_ENABLED } from "@/lib/feature-flags";
 
 export type SignatureFormValues = {
   prenom: string;
@@ -45,6 +46,13 @@ export async function submitSignature(
   _prevState: SignatureFormState,
   formData: FormData,
 ): Promise<SignatureFormState> {
+  if (!SIGNUP_ENABLED) {
+    return {
+      status: "error",
+      message: "Les signatures sont momentanément suspendues. Réessayez d'ici peu.",
+    };
+  }
+
   const raw = rawFromFormData(formData);
   // On repropose systématiquement les valeurs saisies : si la soumission
   // échoue (validation, erreur serveur...), le formulaire doit rester
