@@ -33,7 +33,7 @@ export const CHARTER_PRINCIPLES = [
       "Nous souhaitons la voir se développer également dans les structures et les métiers de l'écosystème esport.",
       "Dans l'esport, seules comptent la motivation, les compétences et la performance.",
       "Afin d'élargir ce vivier de talents, davantage de dispositifs dédiés aux femmes, aux personnes transgenres et non binaires, sont nécessaires.",
-      "Il s'agit pour elles de se former, développer leur confiance en elles, compter sur un accompagnement et une communauté de soutien pour se lancer dans l'arène.",
+      "Il s'agit pour elles de se former, de développer leur confiance en elles, de compter sur un accompagnement et une communauté de soutien pour se lancer dans l'arène.",
     ],
   },
   {
@@ -42,7 +42,7 @@ export const CHARTER_PRINCIPLES = [
     paragraphs: [
       "Nous appelons à une pratique responsable du jeu vidéo et de l'esport,",
       "en veillant à sa santé physique et mentale, en recherchant un équilibre de vie avec le game,",
-      "et adoptant une pratique vidéoludique et esportive écoresponsable.",
+      "et en adoptant une pratique vidéoludique et esportive écoresponsable.",
     ],
   },
 ] as const;

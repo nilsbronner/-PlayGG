@@ -90,7 +90,7 @@ export function SignatoryWall({
 
       {signatories.length === 0 ? (
         <p className="rounded-xl border border-dashed border-ink/15 px-5 py-8 text-center text-ink/50">
-          Les premiers signataires
+          Les signatures publiques
         </p>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

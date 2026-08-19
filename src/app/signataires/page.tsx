@@ -42,7 +42,7 @@ export default async function SignatairesPage() {
       <main className="flex-1">
         <div className="mx-auto max-w-4xl px-6 py-16">
           <p className="mb-3 font-sans text-xs font-bold uppercase tracking-[0.14em] text-violet">
-            Preuve sociale
+            Mur public
           </p>
           <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
             Les signataires
@@ -51,13 +51,12 @@ export default async function SignatairesPage() {
           {wallData ? (
             <>
               <p className="mt-4 max-w-xl text-ink/65">
+                Déjà{" "}
                 <span className="font-sans font-bold text-ink">
                   <SignatureCounter initialCount={wallData.count} />
                 </span>{" "}
-                personnes et structures se sont déjà engagées pour un esport
-                responsable. Certain·e·s signataires choisissent de ne pas
-                apparaître ici : le mur n&apos;affiche que celles et ceux qui
-                ont donné leur accord explicite.
+                personnes et structures ont choisi d&apos;adhérer à la Charte.
+                Leurs noms apparaissent ici avec leur accord.
               </p>
 
               <div className="mt-10">

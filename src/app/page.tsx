@@ -142,7 +142,7 @@ export default async function HomePage() {
             </p>
             <div className="mt-7 flex items-center justify-center">
               <Link href="/signer" className="btn-primary">
-                Signer #PlayGG
+                Je signe #PlayGG
               </Link>
             </div>
           </div>
