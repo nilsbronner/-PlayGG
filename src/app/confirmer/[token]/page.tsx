@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { greetingName } from "@/lib/name";
+import { BadgeOverlayTool } from "@/components/BadgeOverlayTool";
 
 export const metadata: Metadata = {
   title: "Confirmation de signature — #PlayGG",
@@ -79,7 +80,7 @@ export default async function ConfirmTokenPage({
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <div className="mx-auto max-w-lg px-6 py-24 text-center">
+        <div className="mx-auto max-w-2xl px-6 py-24 text-center">
           {result.status === "success" && (
             <>
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue/10">
@@ -107,6 +108,18 @@ export default async function ConfirmTokenPage({
                   Télécharger mon badge
                 </a>
               </div>
+
+              <div className="mt-14 text-center">
+                <h2 className="font-display text-sm uppercase text-ink sm:text-base">
+                  Affichez le badge sur vos réseaux
+                </h2>
+                <p className="mt-2 text-sm text-ink/60">
+                  Ajoutez-le directement à votre photo de profil ou à votre bannière actuelle
+                  — tout se passe dans votre navigateur, aucune image n&apos;est envoyée à un
+                  serveur.
+                </p>
+              </div>
+              <BadgeOverlayTool />
             </>
           )}
 
