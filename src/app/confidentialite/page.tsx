@@ -15,7 +15,7 @@ export default function PrivacyPage() {
           <h1 className="font-display text-lg uppercase leading-relaxed sm:text-2xl">
             Politique de confidentialité
           </h1>
-          <p className="mt-3 text-sm text-ink/50">Dernière mise à jour : [date]</p>
+          <p className="mt-3 text-sm text-ink/50">Dernière mise à jour : 19 août 2026</p>
           <p className="mt-6 leading-relaxed text-ink/75">
             Cette politique explique quelles données sont collectées lorsque
             vous signez la Charte #PlayGG, pourquoi elles le sont et comment
@@ -34,13 +34,13 @@ export default function PrivacyPage() {
               <p className="mt-2 leading-relaxed">
                 Skillcamp Strasbourg Esport
                 <br />
-                [Adresse]
+                91 route des Romains, 67200 Strasbourg
                 <br />
-                [Adresse e-mail]
+                luca@skillcamp.gg
               </p>
               <p className="mt-2 leading-relaxed">
                 Pour toute question concernant vos données personnelles ou
-                pour exercer vos droits : [Adresse e-mail]
+                pour exercer vos droits : nils.bronner@gmail.com
               </p>
             </section>
 
@@ -119,7 +119,7 @@ export default function PrivacyPage() {
                 public de votre signature.
               </p>
               <p className="mt-2 leading-relaxed">
-                Pour exercer vos droits, contactez : [Adresse e-mail]
+                Pour exercer vos droits, contactez : nils.bronner@gmail.com
               </p>
               <p className="mt-2 leading-relaxed">
                 Votre demande de retrait entraîne la suppression de votre

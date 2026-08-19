@@ -91,7 +91,7 @@ export default async function ConfirmTokenPage({
               </h1>
               <p className="mt-4 text-ink/65">Récupérez votre badge, {result.name}.</p>
 
-              <div className="mt-10 rounded-2xl border border-ink/10 bg-surface p-6">
+              <div className="mt-10 rounded-2xl border border-ink/10 bg-ink p-6">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/api/badge/${result.id}`}

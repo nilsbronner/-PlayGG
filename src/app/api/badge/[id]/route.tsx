@@ -53,7 +53,6 @@ export async function GET(
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#14141C",
           padding: "56px 64px",
         }}
       >

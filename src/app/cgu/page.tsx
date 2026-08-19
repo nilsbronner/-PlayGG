@@ -66,7 +66,13 @@ export default function TermsPage() {
               <h2 className="font-display text-xl uppercase text-ink">
                 5. Contact
               </h2>
-              <p className="mt-2 leading-relaxed">[Contact à compléter.]</p>
+              <p className="mt-2 leading-relaxed">
+                Nils Bronner
+                <br />
+                SAS Le Grub
+                <br />
+                grubonjour@gmail.com
+              </p>
             </section>
           </div>
         </div>
