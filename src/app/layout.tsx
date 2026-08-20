@@ -21,10 +21,26 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const title = "#PlayGG — Signez la Charte pour un esport mixte et responsable";
+const description =
+  "Signez publiquement la Charte #PlayGG et obtenez votre badge d'engagement pour un esport plus mixte et plus responsable.";
+
 export const metadata: Metadata = {
-  title: "#PlayGG — Signez la Charte pour un esport mixte et responsable",
-  description:
-    "Signez publiquement la Charte #PlayGG et obtenez votre badge d'engagement pour un esport plus mixte et plus responsable.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://playgg.fr"),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    siteName: "#PlayGG",
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 export default function RootLayout({
