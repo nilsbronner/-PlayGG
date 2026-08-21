@@ -8,6 +8,11 @@ export const metadata: Metadata = {
 
 const FAQ_ITEMS: { question: string; answer: string }[] = [
   {
+    question: "Que signifie #PlayGG ?",
+    answer:
+      "#PlayGG fait référence à l'expression GG, pour Good Game, utilisée dans le jeu vidéo et l'esport pour saluer une belle partie ou une bonne performance. #PlayGG invite aussi à jouer fair-play.",
+  },
+  {
     question: "Qui peut signer la Charte #PlayGG ?",
     answer:
       "Toute personne, ainsi que les équipes, clubs, associations, entreprises et institutions qui adhèrent aux trois principes de la Charte.",
