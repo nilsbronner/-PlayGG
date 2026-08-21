@@ -21,9 +21,8 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const title = "#PlayGG — Signez la Charte pour un esport mixte et responsable";
-const description =
-  "Signez publiquement la Charte #PlayGG et obtenez votre badge d'engagement pour un esport plus mixte et plus responsable.";
+const title = "#PlayGG | Pour un esport mixte et responsable";
+const description = "Soutenez la charte de manière anonyme ou publique.";
 
 // Tolère une valeur sans schéma (ex. "playgg.fr" au lieu de
 // "https://playgg.fr"), qui ferait planter `new URL()` au build.

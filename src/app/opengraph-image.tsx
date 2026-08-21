@@ -45,7 +45,7 @@ export default async function Image() {
             textAlign: "center",
           }}
         >
-          Signez la Charte pour un esport mixte et responsable
+          Pour un esport mixte et responsable
         </span>
       </div>
     ),
