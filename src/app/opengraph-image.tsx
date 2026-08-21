@@ -32,16 +32,16 @@ export default async function Image() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ fontFamily: "Silkscreen", fontSize: 96, color: "#2F3EE0" }}>#</span>
-          <span style={{ fontFamily: "Silkscreen", fontSize: 96, color: "#8B4FF0" }}>PlayGG</span>
+          <span style={{ fontFamily: "Silkscreen", fontSize: 60, color: "#2F3EE0" }}>#</span>
+          <span style={{ fontFamily: "Silkscreen", fontSize: 60, color: "#8B4FF0" }}>PlayGG</span>
         </div>
         <span
           style={{
             fontFamily: "Plus Jakarta Sans",
-            fontSize: 30,
+            fontSize: 24,
             color: "#14141C",
-            marginTop: 40,
-            maxWidth: 800,
+            marginTop: 32,
+            maxWidth: 460,
             textAlign: "center",
           }}
         >
