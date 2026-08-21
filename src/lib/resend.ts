@@ -9,8 +9,20 @@ function getEnv(name: string): string {
   return value;
 }
 
+// Tolère une valeur sans schéma (ex. "playgg.fr" au lieu de
+// "https://playgg.fr"), qui donnerait un lien de confirmation cassé
+// dans l'email ("playgg.fr/confirmer/..." sans protocole).
 export function getSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  try {
+    return new URL(raw).toString().replace(/\/$/, "");
+  } catch {
+    try {
+      return new URL(`https://${raw}`).toString().replace(/\/$/, "");
+    } catch {
+      return "http://localhost:3000";
+    }
+  }
 }
 
 export async function sendConfirmationEmail(params: {

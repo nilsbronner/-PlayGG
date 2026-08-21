@@ -25,8 +25,23 @@ const title = "#PlayGG — Signez la Charte pour un esport mixte et responsable"
 const description =
   "Signez publiquement la Charte #PlayGG et obtenez votre badge d'engagement pour un esport plus mixte et plus responsable.";
 
+// Tolère une valeur sans schéma (ex. "playgg.fr" au lieu de
+// "https://playgg.fr"), qui ferait planter `new URL()` au build.
+function resolveSiteUrl(): URL {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || "https://playgg.fr";
+  try {
+    return new URL(raw);
+  } catch {
+    try {
+      return new URL(`https://${raw}`);
+    } catch {
+      return new URL("https://playgg.fr");
+    }
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://playgg.fr"),
+  metadataBase: resolveSiteUrl(),
   title,
   description,
   openGraph: {
