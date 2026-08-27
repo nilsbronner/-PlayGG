@@ -104,7 +104,7 @@ export default async function HomePage() {
         {(homeData.count !== null || homeData.recentSignatories !== null) && (
           <section className="mx-auto max-w-3xl px-6 py-14">
             <div className="flex items-baseline justify-between gap-4">
-              <h2 className="font-display text-base uppercase sm:text-lg">Ils #PlayGG</h2>
+              <h2 className="font-display text-base uppercase sm:text-lg">Je #PlayGG</h2>
               <Link href="/signataires" className="text-sm font-bold text-violet hover:underline">
                 Voir tout le mur →
               </Link>
